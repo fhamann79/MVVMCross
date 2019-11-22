@@ -19,13 +19,13 @@ namespace TipCalculator.Core.ViewModels
             _calculationService = calculationService;
         }
 
-        public decimal Subtotal 
+        public decimal SubTotal 
         { 
             get => _subtotal; 
             set
             {
                 _subtotal = value;
-                RaisePropertyChanged(() => Subtotal);
+                RaisePropertyChanged(() => SubTotal);
                 Recalculate();
             }
         }
@@ -42,21 +42,17 @@ namespace TipCalculator.Core.ViewModels
 
 
 
-        public decimal Tip 
-        { 
-            get => _tip; 
-            set
-            {
-                _tip = value;
-                RaisePropertyChanged(() => Tip);
-            } 
+        public decimal Tip
+        {
+            get => _tip;
+            set => SetProperty(ref _tip, value);
         }
 
         public async override Task Initialize()
         {
             await base.Initialize();
 
-            Subtotal = 100;
+            SubTotal = 100;
             Generosity = 10;
             Recalculate();
 
@@ -64,7 +60,7 @@ namespace TipCalculator.Core.ViewModels
 
         private void Recalculate()
         {
-            Tip = _calculationService.TipAmount(Subtotal, Generosity);
+            Tip = _calculationService.TipAmount(SubTotal, Generosity);
         }
     }
 }
